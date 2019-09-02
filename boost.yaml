@@ -1,0 +1,41 @@
+- name: Perform list of changes for post-installation in Fedora
+  hosts: "{{ target_host }}"
+  vars_prompt:
+    - name: username
+      prompt: "What is the user who is going to user VMs?"
+
+  tasks:
+    - name: Install required packages
+      yum:
+        name: "{{ packages }}"
+        state: latest
+    
+    - name: Start and enable libvirtd
+      service:
+        name: libvirtd
+        enabled: true
+        state: started
+
+    - name: Add user to libvirt group
+      shell: "usermod -aG libvirt {{ username }}"
+
+    - name: Add virtio-win repo
+      shell: "wget {{ virtio_repo_file_url }} -O {{ virtio_repo_file_path }}"
+
+    - name: Install virtio-win package (/usr/share/virtio-win)
+      yum:
+        name: "{{ virtio_win_package }}"
+        state: latest
+
+    - name: Enable the rpmfusion free repository
+      shell: "dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+
+    - name: Enable the rpmfusion nonfree repository
+      shell: "dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+
+    - name: Enable cockpit services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      with_items: cockpit_services

@@ -1,0 +1,50 @@
+packages:
+# VMs
+  - virt-manager
+  - bridge-utils
+  - libvirt
+  - virt-install
+  - qemu-kvm
+  - libguestfs-tools
+  - virt-top
+# Basic
+  - wget
+  - vim
+  - tmux
+  - ansible
+# Multimedia
+  - vlc
+  - audacity
+# Codecs
+  - gstreamer1-libav
+  - gstreamer1-plugins-bad-free
+  - gstreamer1-plugins-bad-free
+  - gstreamer1-plugins-bad-free-extras
+  - gstreamer1-plugins-bad-freeworld
+  - gstreamer1-plugins-bad-nonfree
+  - gstreamer1-plugins-good
+  - gstreamer1-plugins-ugly
+  - lame-libs
+  - lame-libs
+# Management
+  - cockpit
+# Battery
+  - tlp
+# Compression
+  - unrar
+  - p7zip
+  - p7zip-plugins
+  - gimp
+# Office
+  - libreoffice
+  - thunderbird
+
+
+
+virtio_repo_file_path: "/etc/yum.repos.d/virtio-win.repo"
+virtio_repo_file_url: "https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo"
+virtio_win_package: virtio-win
+
+cockpit_services:
+  - cockpit
+  - cockpit.socket
